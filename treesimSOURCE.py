@@ -1,30 +1,3 @@
-# adapted from https://thesharperdev.com/implementing-minimax-tree-search/
-
-from random import randint
-
-"""
-Setting up Tree Structure
-"""
-# r_max = 100
-class Node():
-    ## holds a single value and links to a left and right node
-    def __init__(self, value, left = None, right = None):
-        self.value = value
-        self.left = left
-        self.right = right
-
-class Choice():
-    ## represents the player's move
-    def __init__(self, move, value):
-        self.move = move
-        self.value = value
-
-    def __str__(self):
-        return self.move + ": " + str(self.value)
-
-"""
-printing tree stuff
-"""
 def get_spacing(depth):
     first_num_spacing = 2 ** depth
     other_num_spacing = 0
@@ -75,9 +48,20 @@ def print_tree(node, depth):
         layer_nodes = next_layer_nodes
         depth = depth - 1
 
-"""
-MINIMAX ALGORITHM
-"""
+class Node():
+    def __init__(self, value):
+        self.value = value
+        self.left = None
+        self.right = None
+
+class Choice():
+    def __init__(self, move, value):
+        self.move = move
+        self.value = value
+
+    def __str__(self):
+        return self.move + ": " + str(self.value)
+
 def minimax(node, is_max):    
     # base case, if no sub nodes, just return the value
     if (node.left is None and node.right is None):
@@ -106,52 +90,6 @@ def minimax(node, is_max):
             return Choice("left", l_choice.value)
         else:
             return Choice("right", r_choice.value)
-
-"""
-HARDCODING A GAME TREE
-"""
-# 4th layer
-# leaf1 = Node(randint(0,r_max))
-# leaf2 = Node(randint(0,r_max))
-# leaf3 = Node(randint(0,r_max))
-# leaf4 = Node(randint(0,r_max))
-# leaf5 = Node(randint(0,r_max))
-# leaf6 = Node(randint(0,r_max))
-# leaf7 = Node(randint(0,r_max))
-# leaf8 = Node(randint(0,r_max))
-
-# # 3rd layer
-# body3_1 = Node(randint(0,r_max))
-# body3_1.left = leaf1
-# body3_1.right = leaf2
-
-# body3_2 = Node(randint(0,r_max))
-# body3_2.left = leaf3
-# body3_2.right = leaf4
-
-# body3_3 = Node(randint(0,r_max))
-# body3_3.left = leaf5
-# body3_3.right = leaf6
-
-# body3_4 = Node(randint(0,r_max))
-# body3_4.left = leaf7
-# body3_4.right = leaf8
-
-# # 2nd layer
-# body2_1 = Node(randint(0,r_max))
-# body2_1.left = body3_1
-# body2_1.right = body3_2
-
-# body2_2 = Node(randint(0,r_max))
-# body2_2.left = body3_3
-# body2_2.right = body3_4
-
-# # root
-# root = Node(None)
-# root.left = body2_1
-# root.right = body2_2
-# print_tree(root, 4)
-# ##########
 
 # 4th layer
 leaf1 = Node(-8)
@@ -195,9 +133,6 @@ root.left = body2_1
 root.right = body2_2
 print_tree(root, 4)
 
-"""
-RUNNING THE PROGRAM
-"""
 print ("\n")
 # initialize our state
 current_node = root
