@@ -5,7 +5,7 @@ import time
 """
 Setting up Tree Structure
 """
-r_max = 15
+r_max = 25
 d = int(input("What depth? ")) #depth
 
 class Node():
@@ -222,58 +222,11 @@ def testthis():
 root = testthis()
 print_tree(root, d)
 
-# """
-# CREATING TREE, DEPTH = 5
-# """
-# LLL = []
-# # ---- creating last layer (4 -> 5)
-# leafcount = 0
-# LL_leaves = []
-# for LL in leaf[-2]:
-#     LL.left = leaf[-1][leafcount]
-#     leafcount += 1
-#     LL.right = leaf[-1][leafcount]
-#     leafcount += 1
-#     # print(leafcount)
-#     LL_leaves.append(LL)
-#     # print_tree(LL,2)
-# LLL.append(LL_leaves)
-
-# # ----- creating layer above (3 -> 4)
-# leaf2count = 0
-# LN_leaves = []
-# for LN in leaf[-3]:
-#     LN.left = LL_leaves[leaf2count]
-#     leaf2count += 1
-#     LN.right = LL_leaves[leaf2count]
-#     leaf2count += 1
-#     LN_leaves.append(LN)
-#     # print_tree(LN,3)
-# LLL.append(LN_leaves)
-
-# # ----- creating layer above (2 -> 3)
-# leaf3count = 0
-# LNN_leaves = []
-# for LNN in leaf[-4]:
-#     LNN.left = LN_leaves[leaf3count]
-#     leaf3count += 1
-#     LNN.right = LN_leaves[leaf3count]
-#     leaf3count += 1
-#     LNN_leaves.append(LNN)
-#     # print_tree(LN,3)
-# LLL.append(LNN_leaves)
-
-# # ----- creating initial layer (1 -> 2)
-# root = Node(None)
-# root.left = LLL[-1][0]
-# root.right = LLL[-1][1]
-
-
 """
 RUNNING THE PROGRAM
 """
-def run_tree():
-    print_tree(root,d)
+def run_treeMM():
+    # print_tree(root,d)
     print ("\n")
     # initialize our state
     current_node = root
@@ -301,4 +254,45 @@ def run_tree():
     elapsed_time = et - st
     final_res = elapsed_time * 1000
     print('Execution time:', final_res, 'milliseconds')
-# run_tree()
+# run_treeMM()
+
+def run_treeAB():
+    # print_tree(root,d)
+    print ("\n")
+    # initialize our state
+    current_node = root
+    is_max = True
+    st = time.time()
+    while (True):
+        # run minimax on current node
+        # choice = minimax(current_node, is_max)
+
+        choice = minimaxAB(current_node, is_max, alpha = MIN, beta = MAX)
+        
+        # make choice based on mini max outcome
+        if (choice.move == "left"):
+            print ("ismax? " + str(is_max) + " | Moving left to node with value " + str(current_node.left.value))
+            current_node = current_node.left
+        elif (choice.move == "right"):
+            print ("ismax? " + str(is_max) +" | Moving right to node with value " + str(current_node.right.value))
+            current_node = current_node.right
+        elif (choice.move == "end"):
+            print ("Game ends with a score of " + str(choice.value))
+            break
+        # flip players turn
+        is_max = not is_max
+    et = time.time()
+    elapsed_time = et - st
+    final_res = elapsed_time * 1000
+    print('Execution time:', final_res, 'milliseconds')
+# run_treeAB()
+
+def compareAlgo():
+    print('-'*60)
+    print('*' *30 + 'Simple Minimax Algorithm')
+    run_treeMM()
+    print('-'*60)
+    print('*' *30 + 'Alptha-Beta Minimax Algorithm')
+    run_treeAB()
+
+compareAlgo()
