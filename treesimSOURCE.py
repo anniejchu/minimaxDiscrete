@@ -1,3 +1,7 @@
+"""
+NOT ORIGINAL CODE! SOURCED FROM https://thesharperdev.com/implementing-minimax-tree-search/
+used as a reference
+"""
 def get_spacing(depth):
     first_num_spacing = 2 ** depth
     other_num_spacing = 0
