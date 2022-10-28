@@ -225,38 +225,7 @@ print_tree(root, d)
 """
 RUNNING THE PROGRAM
 """
-def run_treeMM():
-    # print_tree(root,d)
-    print ("\n")
-    # initialize our state
-    current_node = root
-    is_max = True
-    st = time.time()
-    while (True):
-        # run minimax on current node
-        choice = minimax(current_node, is_max)
-
-        # choice = minimaxAB(current_node, is_max, alpha = MIN, beta = MAX)
-        
-        # make choice based on mini max outcome
-        if (choice.move == "left"):
-            print ("ismax? " + str(is_max) + " | Moving left to node with value " + str(current_node.left.value))
-            current_node = current_node.left
-        elif (choice.move == "right"):
-            print ("ismax? " + str(is_max) +" | Moving right to node with value " + str(current_node.right.value))
-            current_node = current_node.right
-        elif (choice.move == "end"):
-            print ("Game ends with a score of " + str(choice.value))
-            break
-        # flip players turn
-        is_max = not is_max
-    et = time.time()
-    elapsed_time = et - st
-    final_res = elapsed_time * 1000
-    print('Execution time:', final_res, 'milliseconds')
-# run_treeMM()
-
-def run_treeAB():
+def run_tree(algo):
     # print_tree(root,d)
     print ("\n")
     # initialize our state
@@ -266,8 +235,10 @@ def run_treeAB():
     while (True):
         # run minimax on current node
         # choice = minimax(current_node, is_max)
-
-        choice = minimaxAB(current_node, is_max, alpha = MIN, beta = MAX)
+        if algo == 'MM':
+            choice = minimax(current_node, is_max)
+        else: #say algo == 'AB'
+            choice = minimaxAB(current_node, is_max, alpha = MIN, beta = MAX)
         
         # make choice based on mini max outcome
         if (choice.move == "left"):
@@ -285,14 +256,13 @@ def run_treeAB():
     elapsed_time = et - st
     final_res = elapsed_time * 1000
     print('Execution time:', final_res, 'milliseconds')
-# run_treeAB()
 
 def compareAlgo():
     print('-'*60)
     print('*' *30 + 'Simple Minimax Algorithm')
-    run_treeMM()
+    run_tree('MM')
     print('-'*60)
     print('*' *30 + 'Alptha-Beta Minimax Algorithm')
-    run_treeAB()
+    run_tree('AB')
 
 compareAlgo()
