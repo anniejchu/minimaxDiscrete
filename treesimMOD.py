@@ -27,7 +27,7 @@ class Choice():
         return self.move + ": " + str(self.value)
 
 """
-printing tree stuff
+Printing tree stuff
 """
 def get_spacing(depth):
     first_num_spacing = 2 ** depth
@@ -35,7 +35,6 @@ def get_spacing(depth):
     other_num_spacing = 2**(depth+1)-1
     return [first_num_spacing, other_num_spacing]
     
-
 def print_tree(node, depth):
     layer_nodes = [node]
     while (len(layer_nodes) > 0):
@@ -149,11 +148,10 @@ def minimaxAB(node, is_max, alpha, beta):
             return Choice("right", r_choice.value)
 
 """
-HARDCODING A GAME TREE
+CREATING GAME TREE OF VARIABLE DEPTH
 """
-# 4th layer
+#generating values for nodes based on depth of tree
 def createleafs(layer_num):
-    # last_num = 2**(layer_num-1)
     all_num = []
     for i in range(1, layer_num):
         nodelayer = 2**i
@@ -166,14 +164,13 @@ def createleafs(layer_num):
     return all_num
 
 leaf = createleafs(d)
-# leaf = [[Node(2)]*2, [Node(4)]*4, [Node(8)]*8,[Node(16)]*16]#, [Node(32)]*32 ]
 
-def testthis():
+#connecting nodes together to form game tree
+def createTree():
     leafTotal = []
     nodeCount = 0
-
     for i in range(-2,-len(leaf)-1,-1):
-        # print(f'i = {i}')
+        #creating bottom branch
         if i == -2:
             leafArray = []
             leafCount = 0
@@ -182,61 +179,40 @@ def testthis():
                 leafCount +=1
                 leafLevel.right = leaf[i+1][leafCount]
                 leafCount +=1
-                
                 leafArray.append(leafLevel)
-                # print_tree(leafLevel,2)
             leafTotal.append(leafArray)
-            # print(f'len =># {len(leafTotal)}')
+        #creating all intermediate branches    
         else:
             leafArray = []
             leafCount = 0
-            # print(f'******* leaftotal = {len(leafTotal)}')
             for leafLevel in leaf[i]:
-                # print(len(leafTotal), nodeCount, leafCount)
-                # print(leafTotal)
-                # leafLevel.left = leafArray[leafCount]
                 leafLevel.left = leafTotal[nodeCount][leafCount]
                 leafCount +=1
                 leafLevel.right = leafTotal[nodeCount][leafCount]
-
-                # leafLevel.right = leafArray[leafCount]
                 leafCount +=1
-
                 leafArray.append(leafLevel)
-                # print_tree(leafLevel,4)
-
-                # print(f'learfarray {leafArray}')
             nodeCount +=1
-
             leafTotal.append(leafArray)
-            # print(f'len =>{len(leafTotal)}')
-
-        # print(len(leafArray))
-
+    #creating first branch
     root = Node(None)
     root.left = leafTotal[-1][-1]
     root.right = leafTotal[-1][-2]
     return root
-    # print_tree(leafTotal[-1][-1], 5)
-    # print_tree(leafTotal[-1][-2], 5)
 
-
-root = testthis()
+root = createTree()
 print_tree(root, d)
 
 """
 RUNNING THE PROGRAM
 """
 def run_tree(algo):
-    # print_tree(root,d)
     print ("\n")
-    # initialize our state
+
+    # initializing state at ROOT, maximizing player starts
     current_node = root
     is_max = True
     st = time.time()
     while (True):
-        # run minimax on current node
-        # choice = minimax(current_node, is_max)
         if algo == 'MM':
             choice = minimax(current_node, is_max)
         else: #say algo == 'AB'
