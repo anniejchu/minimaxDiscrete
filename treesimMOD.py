@@ -1,4 +1,6 @@
-# adapted from https://thesharperdev.com/implementing-minimax-tree-search/
+# Annie Chu -- modified version
+#  adapted from https://thesharperdev.com/implementing-minimax-tree-search/
+#  see treesimSOURCE.py to see original
 
 from random import randint
 import time
