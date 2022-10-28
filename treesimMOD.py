@@ -6,7 +6,7 @@ import time
 Setting up Tree Structure
 """
 r_max = 15
-d = 4 #depth
+d = int(input("What depth? ")) #depth
 
 class Node():
     ## holds a single value and links to a left and right node
@@ -30,14 +30,7 @@ printing tree stuff
 def get_spacing(depth):
     first_num_spacing = 2 ** depth
     other_num_spacing = 0
-    if (depth == 1):
-        other_num_spacing = 3
-    elif (depth == 2):
-        other_num_spacing = 7
-    elif (depth == 3):
-        other_num_spacing = 15
-    elif (depth == 4):
-        other_num_spacing = 31
+    other_num_spacing = 2**(depth+1)-1
     return [first_num_spacing, other_num_spacing]
     
 
@@ -172,7 +165,6 @@ def createleafs(layer_num):
 
 leaf = createleafs(d)
 # leaf = [[Node(2)]*2, [Node(4)]*4, [Node(8)]*8,[Node(16)]*16]#, [Node(32)]*32 ]
-##### creating last layer
 
 def testthis():
     leafTotal = []
@@ -289,9 +281,9 @@ def run_tree():
     st = time.time()
     while (True):
         # run minimax on current node
-        # choice = minimax(current_node, is_max)
+        choice = minimax(current_node, is_max)
 
-        choice = minimaxAB(current_node, is_max, alpha = MIN, beta = MAX)
+        # choice = minimaxAB(current_node, is_max, alpha = MIN, beta = MAX)
         
         # make choice based on mini max outcome
         if (choice.move == "left"):
