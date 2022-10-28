@@ -1,5 +1,5 @@
 """
-NOT ORIGINAL CODE! SOURCED FROM https://thesharperdev.com/implementing-minimax-tree-search/
+ORIGINAL CODE -- SOURCED FROM https://thesharperdev.com/implementing-minimax-tree-search/
 used as a reference
 """
 def get_spacing(depth):
